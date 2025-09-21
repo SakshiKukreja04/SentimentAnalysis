@@ -1,0 +1,164 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
+All colors MUST be HSL.
+*/
+
+@layer base {
+  :root {
+    /* Legal/Government Theme - Navy Blue Primary */
+    --background: 0 0% 100%;
+    --foreground: 221 39% 11%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 221 39% 11%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 221 39% 11%;
+
+    /* Navy Blue Primary */
+    --primary: 221 83% 53%;
+    --primary-foreground: 0 0% 98%;
+    --primary-dark: 221 95% 25%;
+
+    /* Emerald Accent */
+    --accent: 160 84% 39%;
+    --accent-foreground: 0 0% 98%;
+    --accent-light: 160 65% 85%;
+
+    --secondary: 220 14% 96%;
+    --secondary-foreground: 221 39% 11%;
+
+    --muted: 220 14% 96%;
+    --muted-foreground: 215 16% 47%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 220 13% 91%;
+    --input: 220 13% 91%;
+    --ring: 221 83% 53%;
+
+    /* Professional Styling */
+    --radius: 0.75rem;
+    --shadow-soft: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+    --shadow-medium: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    --shadow-large: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    
+    /* Gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--primary-dark)) 100%);
+    --gradient-accent: linear-gradient(135deg, hsl(var(--accent)) 0%, hsl(160 84% 45%) 100%);
+    --gradient-hero: linear-gradient(135deg, hsl(var(--primary-dark)) 0%, hsl(var(--primary)) 50%, hsl(var(--accent)) 100%);
+
+    /* Chart Colors */
+    --chart-positive: 160 84% 39%;
+    --chart-negative: 0 84% 60%;
+    --chart-neutral: 47 67% 58%;
+    --chart-background: 220 14% 96%;
+
+    --sidebar-background: 0 0% 98%;
+
+    --sidebar-foreground: 240 5.3% 26.1%;
+
+    --sidebar-primary: 240 5.9% 10%;
+
+    --sidebar-primary-foreground: 0 0% 98%;
+
+    --sidebar-accent: 240 4.8% 95.9%;
+
+    --sidebar-accent-foreground: 240 5.9% 10%;
+
+    --sidebar-border: 220 13% 91%;
+
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 210 40% 98%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 212.7 26.8% 83.9%;
+    --sidebar-background: 240 5.9% 10%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'Inter', system-ui, sans-serif;
+  }
+}
+
+@layer components {
+  /* Professional Card Components */
+  .card-professional {
+    @apply bg-card border border-border rounded-xl shadow-[var(--shadow-soft)] hover:shadow-[var(--shadow-medium)] transition-shadow duration-200;
+  }
+
+  .card-dashboard {
+    @apply bg-card border border-border rounded-xl p-6 shadow-[var(--shadow-medium)];
+  }
+
+  /* Button Variants */
+  .btn-hero {
+    @apply bg-gradient-to-r from-primary to-primary-dark text-primary-foreground px-8 py-3 rounded-lg shadow-[var(--shadow-medium)] hover:shadow-[var(--shadow-large)] transform hover:-translate-y-0.5 transition-all duration-200 font-semibold;
+  }
+
+  .btn-accent {
+    @apply bg-gradient-to-r from-accent to-[hsl(160_84%_45%)] text-accent-foreground px-6 py-2 rounded-lg shadow-[var(--shadow-soft)] hover:shadow-[var(--shadow-medium)] transition-all duration-200;
+  }
+
+  /* Chart Styling */
+  .chart-container {
+    @apply bg-chart-background/50 border border-border rounded-lg p-4;
+  }
+
+  /* Professional Typography */
+  .heading-hero {
+    @apply text-5xl font-bold bg-gradient-to-r from-primary-dark via-primary to-accent bg-clip-text text-transparent leading-tight;
+  }
+
+  .heading-section {
+    @apply text-3xl font-bold text-foreground;
+  }
+
+  .text-muted-pro {
+    @apply text-muted-foreground leading-relaxed;
+  }
+}
