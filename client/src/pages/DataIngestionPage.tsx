@@ -30,6 +30,7 @@ export const DataIngestionPage = () => {
   });
   const { toast } = useToast();
   const navigate = useNavigate();
+  const API_BASE = (import.meta as any).env?.VITE_API_BASE || "http://localhost:8000";
 
   const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -45,27 +46,44 @@ export const DataIngestionPage = () => {
   const handleAnalyzeFile = async () => {
     if (!selectedFile) return;
 
-    setIsProcessing(true);
-    setUploadProgress(0);
+    try {
+      setIsProcessing(true);
+      setUploadProgress(10);
 
-    // Simulate file upload and processing
-    const interval = setInterval(() => {
-      setUploadProgress(prev => {
-        if (prev >= 100) {
-          clearInterval(interval);
-          setTimeout(() => {
-            setIsProcessing(false);
-            toast({
-              title: "Analysis Complete",
-              description: "Your data has been successfully analyzed. Redirecting to dashboard...",
-            });
-            setTimeout(() => navigate("/dashboard"), 1500);
-          }, 1000);
-          return 100;
-        }
-        return prev + 10;
+      const form = new FormData();
+      form.append("file", selectedFile);
+
+      const res = await fetch(`${API_BASE}/upload-file`, {
+        method: "POST",
+        body: form,
       });
-    }, 300);
+
+      setUploadProgress(70);
+
+      const data = await res.json();
+      if (!res.ok) {
+        throw new Error(data?.message || "Upload failed");
+      }
+
+      setUploadProgress(100);
+      toast({
+        title: "Upload Complete",
+        description: `Stored in ${data.collection}. ID: ${data.inserted_id || "n/a"}`,
+      });
+
+      // Optional redirect or reset
+      setTimeout(() => {
+        setIsProcessing(false);
+        // navigate("/dashboard");
+      }, 800);
+    } catch (err: any) {
+      setIsProcessing(false);
+      toast({
+        title: "Upload Error",
+        description: err?.message || "Failed to upload file",
+        variant: "destructive",
+      });
+    }
   };
 
   const handleKafkaConnect = () => {
